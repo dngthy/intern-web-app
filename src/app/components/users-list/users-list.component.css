@@ -1,17 +1,6 @@
-*{
-  margin:0;
-  padding:0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-.container{
-  display:flex;
-  justify-content: space-around;
-  background:#040d21;
-  min-height:100vh;
-  position:relative;
-}
 .wrapper{
   height: fit-content;
+  height: -moz-fit-content;
   padding:8px 30px 25px 20px;
   border-radius:5px;
   margin-top:5vh;
@@ -22,12 +11,15 @@
   color:#00cfc8;
   letter-spacing:1px;
 }
+.text-red{
+  color:red !important
+}
 .title-label{
   font-weight: 700 !important;
   font-size:25px !important;
   color:white !important;
 }
- .wrapper input{
+ .wrapper input,.wrapper select{
   width:100%;
   padding:10px 10px;
   background:transparent;
@@ -36,6 +28,10 @@
   border:none;
   border-bottom:2px solid #12337a;
   border-radius:5px;
+}
+.input-group{
+  display:flex;
+  gap:50px;
 }
 .btn-group{
   display:flex;
@@ -54,28 +50,44 @@
   border:1px solid #2da44e;
   color:#2da44e;
 }
+.btn--primary:hover{
+  box-shadow: #2da44e  0px 2px 8px 0px;
+}
 .btn--warning{
   border:1px solid rgb(221, 87, 87);
   color:rgb(221, 87, 87);
+}
+.btn--warning:hover{
+  box-shadow: rgb(221, 87, 87)  0px 2px 8px 0px;
 }
 .btn--confirm{
   border:1px solid rgb(231, 255, 78);
   color:rgb(231, 255, 78);
 }
-.container button:hover{
+.btn--confirm:hover{
+  box-shadow: rgb(231, 255, 78)  0px 2px 8px 0px;
+}
+.btn:hover{
   opacity:0.6;
-  transition: 0.8s;
+  transition: 0.5s;
 }
 .table-list{
-  display: table;
-  width:50vw;
-  margin-top:3vh;
+  /* display: table; */
+  width:55vw;
+  margin-top:7vh;
+  height:80vh !important;
+  overflow:auto;
   color:white;
+  scrollbar-width: thin;
 }
 .table-row{
   display:flex;
   border:1px solid #627597;
   padding:8px 8px;
+}
+.table-row div{
+  flex: 1;
+  text-overflow: ellipsis;
 }
 .table-row:hover{
   opacity: 0.3;
@@ -94,13 +106,15 @@
   flex:1;
 }
 .modal{
-  width:25vw;
+  width:50vw;
   position: absolute;
-  margin-top:-90vh;
-  margin-left:35vw;
+  margin-left:25vw;
+  margin-top:10vh;
+  height:fit-content;
   z-index:1;
   background:#080f1e;
   border-radius: 5px;
+  display:initial;
   padding-left:10px;
   box-shadow: rgba(0, 0, 0, 0.56) -30vw -30vw 90vw 90vw;
 }

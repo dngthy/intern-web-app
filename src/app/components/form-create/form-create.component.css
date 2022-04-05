@@ -1,0 +1,73 @@
+.wrapper{
+  height: fit-content;
+  height: -moz-fit-content;
+  padding:8px 30px 25px 20px;
+  border-radius:5px;
+  margin-top:5vh;
+}
+.wrapper label{
+  font-size: 16px;
+  font-weight:600;
+  color:#00cfc8;
+  letter-spacing:1px;
+}
+.text-red{
+  color:red !important
+}
+.title-label{
+  font-weight: 700 !important;
+  font-size:25px !important;
+  color:white !important;
+}
+ .wrapper input,.wrapper select{
+  width:100%;
+  padding:10px 10px;
+  background:transparent;
+  margin:20px 0;
+  color:gray;
+  border:none;
+  border-bottom:2px solid #12337a;
+  border-radius:5px;
+}
+.input-group{
+  display:flex;
+  gap:50px;
+}
+.btn-group{
+  display:flex;
+}
+.btn{
+  cursor: pointer;
+  margin:0 10px;
+  box-sizing: border-box;
+  padding:10px 10px;
+  border-radius:5px;
+  border:1px solid #627597;
+  background:transparent;
+  color:#627597;
+}
+.btn--primary{
+  border:1px solid #2da44e;
+  color:#2da44e;
+}
+.btn--primary:hover{
+  box-shadow: #2da44e  0px 2px 8px 0px;
+}
+.btn--warning{
+  border:1px solid rgb(221, 87, 87);
+  color:rgb(221, 87, 87);
+}
+.btn--warning:hover{
+  box-shadow: rgb(221, 87, 87)  0px 2px 8px 0px;
+}
+.btn--confirm{
+  border:1px solid rgb(231, 255, 78);
+  color:rgb(231, 255, 78);
+}
+.btn--confirm:hover{
+  box-shadow: rgb(231, 255, 78)  0px 2px 8px 0px;
+}
+.btn:hover{
+  opacity:0.6;
+  transition: 0.5s;
+}

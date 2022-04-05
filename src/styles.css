@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+:root{
+  --darktheme-background:#040d21;
+  --darktheme-border-btn-color:#627597;
+  --darktheme-header-color:linear-gradient(rgb(255, 28, 247) 25%, rgb(178, 73, 248) 100%);
+  --lighttheme-background: #fff;
+  --lighttheme-border-btn-color:#627597;
+}
+*{
+  margin:0;
+  padding:0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+

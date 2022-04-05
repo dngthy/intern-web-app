@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from './create-user/User';
+import { User } from 'src/app/components/users-management/User';
 import { HttpClient } from '@angular/common/http';
 const CONTEXT={
   users: 'http://localhost:4000/users'
@@ -42,5 +42,5 @@ export class UserService {
   deleteUser(username:string){
     return this.http.delete(`${ENDPOINT.deleteUser}/${username}`)
   }
-  
+
 }
