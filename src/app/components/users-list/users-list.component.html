@@ -1,6 +1,6 @@
 <div class="table-list">
   <div class="table-row table-header">
-    <div>Name</div>
+    <div>Full Name</div>
     <div>Age</div>
     <div>Gender</div>
     <div>Email</div>
@@ -8,7 +8,7 @@
     <div>Action</div>
   </div>
   <div *ngFor="let user of listUsers" class="table-row">
-    <div>{{ user.username |nameCapitalize}}</div>
+    <div>{{ user.firstName + ' ' + user.lastName |nameCapitalize}}</div>
     <div>{{ user.age }}</div>
     <div>{{ user.gender | nameCapitalize}}</div>
     <div>{{ user.email }}</div>
@@ -20,6 +20,9 @@
           (click)="
             showModalWithParam({
               username : user.username,
+              firstName : user.firstName,
+              lastName : user.lastName,
+              password: user.password,
               age : user.age,
               gender : user.gender,
               address : user.address,
@@ -63,12 +66,44 @@
     Username
   </label>
   <input
-    type="text"
-    placeholder="Enter your name"
-    name="username_update"
-    disabled="true"
-    [(ngModel)]="username_update"
-  />
+  type="text"
+  placeholder="Enter your name"
+  name="username_update"
+  disabled="true"
+  [(ngModel)]="username_update"
+/>
+  <div class="input-group">
+    <div>
+      <label  [class]="error.hasErrorUpdateFirstName ? 'text-red' : ''" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+        </svg>
+        First Name </label
+      ><br />
+      <input
+        type="text"
+        placeholder="Enter your first name"
+        name="firstName_update"
+        [(ngModel)]="firstName_update"
+        (keyup)="validateFirstName(firstName_update)"
+      />
+    </div>
+    <div>
+      <label  [class]="error.hasErrorUpdateLastName ? 'text-red' : ''">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+        </svg>
+        Last Name </label
+      ><br />
+      <input
+        type="text"
+        placeholder="Enter your last name"
+        name="lastName_update"
+        [(ngModel)]="lastName_update"
+        (keyup)="validateLastName(lastName_update)"
+      />
+    </div>
+  </div>
   <div class="input-group">
     <div>
       <label>
@@ -99,7 +134,7 @@
       />
     </div>
     <div>
-      <label>
+      <label  [class]="error.hasErrorUpdateGender ? 'text-red' : ''">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -115,7 +150,7 @@
         </svg>
         Gender </label
       ><br />
-      <select name="gender_update" [(ngModel)]="gender_update" [value]="gender_update" title="Hii">
+      <select name="gender_update" [(ngModel)]="gender_update" [value]="gender_update" title="Hii" (change)="validateGender(gender_update)">
         <option value="">Chọn giới tính</option>
         <option value="male">Nam</option>
         <option value="female">Nữ</option>
@@ -123,7 +158,7 @@
       </select>
     </div>
   </div>
-  <label [class]="error.hasErrorUpdateEmail?'text-red':''">
+  <label>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -141,9 +176,8 @@
   <input
     type="text"
     placeholder="Enter your email"
-    name="email_update"
-    [(ngModel)]="email_update"
-    (keyup)="validateUpdateEmail(email_update)"
+    [value]="email_update"
+    disabled
   />
   <label>
     <svg
@@ -166,7 +200,9 @@
     name="address_update"
     [(ngModel)]="address_update"
   />
+  <div class="btn-group">
     <button (click)="showModal()" class="btn">Cancel</button>
-    <button (click)="handleOk()" class="btn btn--confirm">Update</button>
+    <button (click)="handleOk()" class="btn btn--confirm" [disabled]="hasError()">Update</button>
+  </div>
   </div>
 </div>

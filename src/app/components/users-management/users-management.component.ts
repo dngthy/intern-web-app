@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { ValidationService } from 'src/app/services/validation.service';
 import { User } from 'src/app/components/users-management/User';
 
 @Component({
   selector: 'app-users-management',
   templateUrl: './users-management.component.html',
-  styleUrls: ['./users-management.component.css']
+  styleUrls: ['../../app.component.css']
 })
 export class UsersManagementComponent implements OnInit {
   listUsers: User[] = [];
 
-  constructor(private _userService: UserService, private _validation: ValidationService) {}
+  constructor(private _userService: UserService) {}
 
   ngOnInit(): void {
     this.getListUsersDefault()
@@ -24,11 +23,14 @@ export class UsersManagementComponent implements OnInit {
   createUser(user:any) {
     this._userService
     .addUser({
-      username: user.username,
+      username: user.username.trim(),
+      firstName: user.firstName.trim(),
+      lastName: user.lastName.trim(),
+      password: user.password.trim(),
       age: user.age,
-      gender: user.gender,
-      email: user.email,
-      address: user.address
+      gender: user.gender.trim(),
+      email: user.email.trim(),
+      address: user.address.trim()
     })
     .subscribe({
       next: () => {
