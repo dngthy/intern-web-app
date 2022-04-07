@@ -1,9 +1,8 @@
 import { Component, OnInit  } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/pages/users-management/User';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {updateUser, deleteUser} from '../../store/user.actions'
+import {updateUser, deleteUser} from '../../store/actions/user.actions'
 
 @Component({
   selector: 'app-users-list',
@@ -33,7 +32,6 @@ export class UsersListComponent implements OnInit {
   address_update: string = '';
 
   constructor(
-    private _userService: UserService,
     private _store:Store<{userManage: User[]}>
   ) {}
 
@@ -89,14 +87,10 @@ export class UsersListComponent implements OnInit {
   }
 
   updateUser(user: User) {
-    this._userService.updateUser(user).subscribe({
-      next: () => this._store.dispatch(updateUser(user)),
-    });
+    this._store.dispatch(updateUser(user));
   }
 
   deleteUser(username: string) {
-    this._userService.deleteUser(username).subscribe({
-      next: () => this._store.dispatch(deleteUser({username})),
-    });
+    this._store.dispatch(deleteUser({username}))
   }
 }

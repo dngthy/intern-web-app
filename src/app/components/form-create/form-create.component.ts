@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ValidationService } from 'src/app/services/validation.service';
 import { User } from 'src/app/pages/users-management/User';
 import { Store } from '@ngrx/store';
-import { UserService } from 'src/app/services/user.service';
-import { createUser } from 'src/app/store/user.actions';
+import { createUser } from 'src/app/store/actions/user.actions';
 @Component({
   selector: 'app-form-create',
   templateUrl: './form-create.component.html',
@@ -34,7 +33,6 @@ export class FormCreateComponent implements OnInit {
   newUser: User = {...this.newUserForm}
   confirmPassword: string = '';
   constructor(
-    private _userService: UserService,
     private _validation: ValidationService,
     private _store: Store<{userManage: User[]}>,
     ) {}
@@ -84,11 +82,7 @@ export class FormCreateComponent implements OnInit {
       email: this.newUser.email.trim(),
       address: this.newUser.address.trim()
     }
-    this._userService
-    .addUser(user)
-    .subscribe({
-      next: () =>this._store.dispatch(createUser(user))
-    });
-      this.clearInput();
+    this._store.dispatch(createUser({payload: user}))
+    this.clearInput();
   }
 }

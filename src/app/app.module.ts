@@ -8,8 +8,11 @@ import { UsersManagementModule } from 'src/app/pages/users-management/users-mana
 import { HttpClientModule } from '@angular/common/http';
 import { ToggleThemeSwitchModule } from './components/toggle-theme-switch/toggle-theme-switch.module';
 import { StoreModule } from '@ngrx/store';
-import { userManageReducer } from './store/user-manage.reducer';
+import { userManageReducer } from './store/reducers/user-manage.reducer';
 import { LoginModule } from './pages/login/login.module';
+import { EffectsModule } from '@ngrx/effects';
+import { UserManageEffects } from './store/effects/user-manage.effects';
+import { UserService } from './services/user.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -21,9 +24,10 @@ import { LoginModule } from './pages/login/login.module';
     HttpClientModule,
     ToggleThemeSwitchModule,
     StoreModule.forRoot({userManage: userManageReducer}),
-    LoginModule
+    LoginModule,
+    EffectsModule.forRoot([UserManageEffects])
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
