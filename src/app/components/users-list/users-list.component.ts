@@ -1,6 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/components/users-management/User';
+import { User } from 'src/app/pages/users-management/User';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {updateUser, deleteUser} from '../../store/user.actions'
@@ -35,12 +35,12 @@ export class UsersListComponent implements OnInit {
   constructor(
     private _userService: UserService,
     private _store:Store<{userManage: User[]}>
-  ) {
-   this.listUsers$ = this._store.select('userManage')
-   this.listUsers$.subscribe(data => this.listUsers = data)
-  }
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.listUsers$ = this._store.select('userManage')
+    this.listUsers$.subscribe(data => this.listUsers = data)
+  }
 
   validateFirstName(firstName: string){
     this.error.hasErrorUpdateFirstName = firstName === ''
@@ -52,7 +52,6 @@ export class UsersListComponent implements OnInit {
     this.error.hasErrorUpdateGender = gender === ''
   }
   hasError(){
-    let i=0
     for (let mirrorError of Object.values(this.error)){
       if (mirrorError) return true;
     }

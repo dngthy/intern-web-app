@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/components/users-management/User';
+import { User } from 'src/app/pages/users-management/User';
 import { HttpClient } from '@angular/common/http';
 const CONTEXT={
   users: 'http://localhost:4000/users'

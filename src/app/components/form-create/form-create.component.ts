@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ValidationService } from 'src/app/services/validation.service';
-import { User } from 'src/app/components/users-management/User';
-import { Observable } from 'rxjs';
+import { User } from 'src/app/pages/users-management/User';
 import { Store } from '@ngrx/store';
 import { UserService } from 'src/app/services/user.service';
 import { createUser } from 'src/app/store/user.actions';
@@ -11,11 +10,6 @@ import { createUser } from 'src/app/store/user.actions';
   styleUrls: ['./form-create.component.css']
 })
 export class FormCreateComponent implements OnInit {
-
-  @Input() listUsers!: User[];
-  @Output() submit = new EventEmitter();
-
-  userManage$!: Observable<User[]>;
 
   errorForm = {
     hasErrorUsername: true,
@@ -43,8 +37,7 @@ export class FormCreateComponent implements OnInit {
     private _userService: UserService,
     private _validation: ValidationService,
     private _store: Store<{userManage: User[]}>,
-    ) {
-    }
+    ) {}
 
   ngOnInit(): void {
   }
@@ -75,7 +68,6 @@ export class FormCreateComponent implements OnInit {
     this.error.hasErrorGender = gender === ''
   }
   hasError(){
-    let i=0
     for (let mirrorError of Object.values(this.error)){
       if (mirrorError) return true;
     }

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { createUser, setUsers, updateUser, deleteUser } from './user.actions';
-import { User } from '../components/users-management/User';
+import { User } from '../pages/users-management/User';
 export const initializeState: User[] = [];
 export const userManageReducer = createReducer(
   initializeState,

@@ -2,7 +2,7 @@ import { FormCreateModule } from 'src/app/components/form-create/form-create.mod
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersManagementComponent } from './users-management.component';
-import { UsersListModule } from '../users-list/users-list.module';
+import { UsersListModule } from '../../components/users-list/users-list.module';
 
 @NgModule({
   declarations: [UsersManagementComponent],

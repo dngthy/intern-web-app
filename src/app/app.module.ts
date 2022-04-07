@@ -4,11 +4,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UsersManagementModule } from 'src/app/components/users-management/users-management.module';
+import { UsersManagementModule } from 'src/app/pages/users-management/users-management.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ToggleThemeSwitchModule } from './components/toggle-theme-switch/toggle-theme-switch.module';
 import { StoreModule } from '@ngrx/store';
 import { userManageReducer } from './store/user-manage.reducer';
+import { LoginModule } from './pages/login/login.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,6 +21,7 @@ import { userManageReducer } from './store/user-manage.reducer';
     HttpClientModule,
     ToggleThemeSwitchModule,
     StoreModule.forRoot({userManage: userManageReducer}),
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent],

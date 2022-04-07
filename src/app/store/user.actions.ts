@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../components/users-management/User';
+import { User } from '../pages/users-management/User';
 
 export const createUser = createAction('[User] Create User', props<User>());
 export const setUsers = createAction('[Users] Set Users', props<{ listUsers: User[] }>());
