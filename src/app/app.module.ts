@@ -7,6 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UsersManagementModule } from 'src/app/components/users-management/users-management.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ToggleThemeSwitchModule } from './components/toggle-theme-switch/toggle-theme-switch.module';
+import { StoreModule } from '@ngrx/store';
+import { userManageReducer } from './store/user-manage.reducer';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -17,6 +19,7 @@ import { ToggleThemeSwitchModule } from './components/toggle-theme-switch/toggle
     UsersManagementModule,
     HttpClientModule,
     ToggleThemeSwitchModule,
+    StoreModule.forRoot({userManage: userManageReducer}),
   ],
   providers: [],
   bootstrap: [AppComponent],

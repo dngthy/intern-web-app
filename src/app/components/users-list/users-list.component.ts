@@ -1,7 +1,9 @@
-import { Component, Input, OnInit,SimpleChanges  } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { ValidationService } from 'src/app/services/validation.service';
 import { User } from 'src/app/components/users-management/User';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {updateUser, deleteUser} from '../../store/user.actions'
 
 @Component({
   selector: 'app-users-list',
@@ -9,8 +11,10 @@ import { User } from 'src/app/components/users-management/User';
   styleUrls: ['./users-list.component.css'],
 })
 export class UsersListComponent implements OnInit {
-  @Input() listUsers!: User[];
   isVisibleModal = false;
+
+  listUsers$!: Observable<User[]>
+  listUsers!: User[];
 
   errorForm = {
     hasErrorUpdateFirstName: true,
@@ -30,14 +34,13 @@ export class UsersListComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
-    private _validation: ValidationService
-  ) {}
+    private _store:Store<{userManage: User[]}>
+  ) {
+   this.listUsers$ = this._store.select('userManage')
+   this.listUsers$.subscribe(data => this.listUsers = data)
+  }
 
   ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.listUsers = changes['listUsers'].currentValue;
-  }
 
   validateFirstName(firstName: string){
     this.error.hasErrorUpdateFirstName = firstName === ''
@@ -88,21 +91,13 @@ export class UsersListComponent implements OnInit {
 
   updateUser(user: User) {
     this._userService.updateUser(user).subscribe({
-      next: () => {
-        this._userService
-          .getListUsers()
-          .subscribe((res) => (this.listUsers = res));
-      },
+      next: () => this._store.dispatch(updateUser(user)),
     });
   }
 
   deleteUser(username: string) {
     this._userService.deleteUser(username).subscribe({
-      next: () => {
-        this._userService
-          .getListUsers()
-          .subscribe((res) => (this.listUsers = res));
-      },
+      next: () => this._store.dispatch(deleteUser({username})),
     });
   }
 }

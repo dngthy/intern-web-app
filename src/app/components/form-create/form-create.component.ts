@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ValidationService } from 'src/app/services/validation.service';
 import { User } from 'src/app/components/users-management/User';
-
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { UserService } from 'src/app/services/user.service';
+import { createUser } from 'src/app/store/user.actions';
 @Component({
   selector: 'app-form-create',
   templateUrl: './form-create.component.html',
@@ -11,6 +14,9 @@ export class FormCreateComponent implements OnInit {
 
   @Input() listUsers!: User[];
   @Output() submit = new EventEmitter();
+
+  userManage$!: Observable<User[]>;
+
   errorForm = {
     hasErrorUsername: true,
     hasErrorFirstName: true,
@@ -33,7 +39,12 @@ export class FormCreateComponent implements OnInit {
   };
   newUser: User = {...this.newUserForm}
   confirmPassword: string = '';
-  constructor(private _validation: ValidationService) { }
+  constructor(
+    private _userService: UserService,
+    private _validation: ValidationService,
+    private _store: Store<{userManage: User[]}>,
+    ) {
+    }
 
   ngOnInit(): void {
   }
@@ -71,7 +82,21 @@ export class FormCreateComponent implements OnInit {
     return false;
   }
   createUser() {
-      this.submit.emit(this.newUser);
+    const user = {
+      username: this.newUser.username.trim(),
+      firstName: this.newUser.firstName.trim(),
+      lastName: this.newUser.lastName.trim(),
+      password: this.newUser.password.trim(),
+      age: this.newUser.age,
+      gender: this.newUser.gender.trim(),
+      email: this.newUser.email.trim(),
+      address: this.newUser.address.trim()
+    }
+    this._userService
+    .addUser(user)
+    .subscribe({
+      next: () =>this._store.dispatch(createUser(user))
+    });
       this.clearInput();
   }
 }
