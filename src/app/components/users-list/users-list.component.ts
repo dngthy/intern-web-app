@@ -16,9 +16,9 @@ export class UsersListComponent implements OnInit {
   listUsers!: User[];
 
   errorForm = {
-    hasErrorUpdateFirstName: true,
-    hasErrorUpdateLastName: true,
-    hasErrorUpdateGender: true,
+    hasErrorUpdateFirstName: false,
+    hasErrorUpdateLastName: false,
+    hasErrorUpdateGender: false,
   };
   error = {...this.errorForm};
 

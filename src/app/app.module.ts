@@ -13,6 +13,15 @@ import { LoginModule } from './pages/login/login.module';
 import { EffectsModule } from '@ngrx/effects';
 import { UserManageEffects } from './store/effects/user-manage.effects';
 import { UserService } from './services/user.service';
+import { RegisterModule } from './pages/register/register.module';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserHomeModule } from './pages/user-home/user-home.module';
+
+registerLocaleData(en);
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -25,9 +34,12 @@ import { UserService } from './services/user.service';
     ToggleThemeSwitchModule,
     StoreModule.forRoot({userManage: userManageReducer}),
     LoginModule,
-    EffectsModule.forRoot([UserManageEffects])
+    RegisterModule,
+    EffectsModule.forRoot([UserManageEffects]),
+    BrowserAnimationsModule,
+    UserHomeModule
   ],
-  providers: [UserService],
+  providers: [UserService, { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

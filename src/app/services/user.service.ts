@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/pages/users-management/User';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 const CONTEXT={
   users: 'http://localhost:4000/users'
 }
 const ENDPOINT={
-  getListUsers: `${CONTEXT.users}/getListUsers`,
-  findUser: `${CONTEXT.users}/findUser`,
-  createUser: `${CONTEXT.users}/createUser`,
-  updateUser: `${CONTEXT.users}/updateUser`,
-  deleteUser: `${CONTEXT.users}/deleteUser`
+  getListUsers: `${CONTEXT.users}/get-list-users`,
+  findUser: `${CONTEXT.users}/find-user`,
+  createUser: `${CONTEXT.users}/create-user`,
+  updateUser: `${CONTEXT.users}/update-user`,
+  deleteUser: `${CONTEXT.users}/delete-user`,
+  login: `${CONTEXT.users}/login`
 }
 
 @Injectable({
@@ -18,8 +19,8 @@ const ENDPOINT={
 
 export class UserService {
 
-  listUsers: User[] = [];
-
+  user_token = JSON.parse(window.localStorage.getItem('USER_INFO')??'{}').token
+  private headers = new HttpHeaders({'authorization':`Bearer ${this.user_token}`});
   constructor(private http: HttpClient ) {}
 
 
@@ -28,7 +29,7 @@ export class UserService {
   }
 
   getListUsers() {
-    return this.http.get<User[]>(ENDPOINT.getListUsers)
+    return this.http.get<User[]>(ENDPOINT.getListUsers,{ headers: this.headers})
   }
 
   findUser(username:string) {
@@ -36,11 +37,14 @@ export class UserService {
   }
 
   updateUser(user:User) {
-    return this.http.patch(`${ENDPOINT.updateUser}/${user.username}`,user)
+    return this.http.patch(`${ENDPOINT.updateUser}/${user.username}`,user,{ headers: this.headers})
   }
 
   deleteUser(username:string){
-    return this.http.delete(`${ENDPOINT.deleteUser}/${username}`)
+    return this.http.delete(`${ENDPOINT.deleteUser}/${username}`,{ headers: this.headers})
   }
 
+  login(user: {username: string, password: string}) {
+    return this.http.post(`${ENDPOINT.login}`, user)
+  }
 }
