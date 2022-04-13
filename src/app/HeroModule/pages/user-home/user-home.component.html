@@ -1,0 +1,105 @@
+<nz-layout>
+  <nz-header>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal">
+      <li nz-menu-item (click)="drawerAction()">
+        <i nz-icon nzType="user" nzTheme="outline"></i>
+        Profile</li>
+      <li nz-menu-item (click)="logOut()">
+        <i nz-icon nzType="logout" nzTheme="outline"></i>
+        Log Out</li>
+    </ul>
+    <nz-drawer
+      [nzClosable]="false"
+      [nzVisible]="visible"
+      nzPlacement="right"
+      nzTitle="PROFILE"
+      (nzOnClose)="drawerAction()"
+    >
+      <ng-container *nzDrawerContent>
+        <nz-avatar nzText="U"></nz-avatar>
+        <span>{{ user?.firstName + " " + user?.lastName }}</span
+        ><br />
+        <span>{{ user.username }}</span>
+        <nz-tabset>
+          <nz-tab nzTitle="GENERAL">
+            <span>Age: {{ user.age }}</span
+            ><br />
+            <span>Gender: {{ user.gender }}</span
+            ><br />
+            <span>Email: {{ user.email }}</span
+            ><br />
+            <span>Address: {{ user.address }}</span>
+          </nz-tab>
+          <nz-tab nzTitle="CONTACT"> </nz-tab>
+        </nz-tabset>
+      </ng-container>
+    </nz-drawer>
+  </nz-header>
+  <nz-content>
+    <div class="container">
+      <div class="wrapper">
+        <label class="title-label">CREATE NEW HERO</label><br />
+        <div class="input-group">
+          <div>
+            <label>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-pen"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
+                />
+              </svg>
+              ID </label
+            ><br />
+            <input
+              type="text"
+              placeholder="ID"
+              [(ngModel)]="newHero.id"
+            />
+          </div>
+          <div>
+            <label>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-pen"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
+                />
+              </svg>
+              Name Hero</label
+            ><br />
+            <input
+              type="text"
+              placeholder="Name"
+              [(ngModel)]="newHero.name"
+              (keyup.enter)="createHero()"
+            />
+          </div>
+        </div>
+        <div class="btn-group">
+          <button
+            class="btn btn--primary"
+            (click)="createHero()"
+            [disabled]="hasError()"
+          >
+            CREATE
+          </button>
+          <button class="btn" (click)="clearInput()">CANCEL</button>
+        </div>
+      </div>
+      <app-hero-list></app-hero-list>
+      </div>
+  </nz-content>
+</nz-layout>
+
+
