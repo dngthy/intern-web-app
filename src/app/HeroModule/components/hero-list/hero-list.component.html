@@ -1,0 +1,36 @@
+<div class="table-list">
+  <button class="btn" (click)="deleteMultiUsers()">Delete Checked Heros</button><br />
+  <nz-table
+    #rowSelectionTable
+    nzShowPagination
+    nzShowSizeChanger
+    [nzData]="listHeros"
+  >
+    <thead>
+      <tr>
+        <th
+          [nzChecked]="checked"
+          [nzIndeterminate]="indeterminate"
+          (nzCheckedChange)="onAllChecked()"
+        >
+        </th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td
+          [nzChecked]="setOfCheckedId.has(data.id)"
+          (nzCheckedChange)="onItemChecked(data.id)"
+        ></td>
+        <td>{{ data.id }}</td>
+        <td>{{ data.name }}</td>
+        <button class="btn btn--warning" (click)="deleteHero(data.id)">
+          DELETE
+        </button>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

@@ -1,0 +1,208 @@
+<div class="table-list">
+  <div class="table-row table-header">
+    <div>Full Name</div>
+    <div>Age</div>
+    <div>Gender</div>
+    <div>Email</div>
+    <div>Address</div>
+    <div>Action</div>
+  </div>
+  <div *ngFor="let user of listUsers" class="table-row">
+    <div>{{ user.firstName + ' ' + user.lastName |nameCapitalize}}</div>
+    <div>{{ user.age }}</div>
+    <div>{{ user.gender | nameCapitalize}}</div>
+    <div>{{ user.email }}</div>
+    <div>{{ user.address | nameCapitalize }}</div>
+    <div>
+      <div class="btn-group">
+        <button
+          class="btn"
+          (click)="
+            showModalWithParam({
+              username : user.username,
+              firstName : user.firstName,
+              lastName : user.lastName,
+              password: user.password,
+              age : user.age,
+              gender : user.gender,
+              address : user.address,
+              email : user.email
+            })
+          "
+        >
+          UPDATE
+        </button>
+        <button
+          class="btn btn--warning"
+          (click)="deleteUser(user.username)"
+        >
+          DELETE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal"
+  [class]="isVisibleModal ? 'modal-visible' : 'modal-hidden'"
+  (nzOnCancel)="showModal()"
+  (nzOnOk)="handleOk()"
+>
+<div class="wrapper">
+  <label class="title-label">USER DETAIL</label><br />
+  <label>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="14"
+      fill="currentColor"
+      class="bi bi-person"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"
+      />
+    </svg>
+    Username
+  </label>
+  <input
+  type="text"
+  placeholder="Enter your name"
+  name="username_update"
+  disabled="true"
+  [(ngModel)]="username_update"
+/>
+  <div class="input-group">
+    <div>
+      <label  [class]="error.hasErrorUpdateFirstName ? 'text-red' : ''" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+        </svg>
+        First Name </label
+      ><br />
+      <input
+        type="text"
+        placeholder="Enter your first name"
+        name="firstName_update"
+        [(ngModel)]="firstName_update"
+        (keyup)="validateFirstName(firstName_update)"
+      />
+    </div>
+    <div>
+      <label  [class]="error.hasErrorUpdateLastName ? 'text-red' : ''">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+        </svg>
+        Last Name </label
+      ><br />
+      <input
+        type="text"
+        placeholder="Enter your last name"
+        name="lastName_update"
+        [(ngModel)]="lastName_update"
+        (keyup)="validateLastName(lastName_update)"
+      />
+    </div>
+  </div>
+  <div class="input-group">
+    <div>
+      <label>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="14"
+          fill="currentColor"
+          class="bi bi-calendar-date"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"
+          />
+          <path
+            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
+          />
+        </svg>
+        Age </label
+      ><br />
+      <input
+        type="number"
+        min="1"
+        max="120"
+        placeholder="Enter your age"
+        name="age_update"
+        [(ngModel)]="age_update"
+      />
+    </div>
+    <div>
+      <label  [class]="error.hasErrorUpdateGender ? 'text-red' : ''">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-gender-ambiguous"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M11.5 1a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-3.45 3.45A4 4 0 0 1 8.5 10.97V13H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V14H6a.5.5 0 0 1 0-1h1.5v-2.03a4 4 0 1 1 3.471-6.648L14.293 1H11.5zm-.997 4.346a3 3 0 1 0-5.006 3.309 3 3 0 0 0 5.006-3.31z"
+          />
+        </svg>
+        Gender </label
+      ><br />
+      <select name="gender_update" [(ngModel)]="gender_update" [value]="gender_update" title="Hii" (change)="validateGender(gender_update)">
+        <option value="">Chọn giới tính</option>
+        <option value="male">Nam</option>
+        <option value="female">Nữ</option>
+        <option value="other">Khác</option>
+      </select>
+    </div>
+  </div>
+  <label>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-envelope"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
+      />
+    </svg>
+    Email
+  </label>
+  <input
+    type="text"
+    placeholder="Enter your email"
+    [value]="email_update"
+    disabled
+  />
+  <label>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-house-door"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"
+      />
+    </svg>
+    Address
+  </label>
+  <input
+    type="text"
+    placeholder="Enter your address"
+    name="address_update"
+    [(ngModel)]="address_update"
+  />
+  <div class="btn-group">
+    <button (click)="showModal()" class="btn">Cancel</button>
+    <button (click)="handleOk()" class="btn btn--confirm" [disabled]="hasError()">Update</button>
+  </div>
+  </div>
+</div>
